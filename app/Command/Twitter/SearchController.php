@@ -88,7 +88,7 @@ class SearchController extends CommandController
         //generate tags for this user's top repo languages
         foreach ($user_data['topRepositories']['nodes'] as $repository) {
             $projects[] = $repository;
-            if (array_key_exists('primaryLanguage', $repository)) {
+            if (isset($repository['primaryLanguage']) && isset($repository['primaryLanguage']['name'])) {
                 $tags[] = $repository['primaryLanguage']['name'];
             }
         }

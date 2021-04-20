@@ -19,6 +19,6 @@ The original list was limited thou, for including only people who identify as wo
 
 {% twitter 1384503318324649985 %}
 
-
+If you'd like to be included in this public listing page, you can reply to that thread with your GitHub profile URL or submit a pull request to our [open source project repository](https://github.com/erikaheidi/sponsoross).
 
 

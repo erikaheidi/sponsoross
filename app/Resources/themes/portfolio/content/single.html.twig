@@ -3,6 +3,13 @@
 {% block content %}
 <div class="bg-white col-span-2 shadow-lg rounded-md mb-10 py-6 px-6">
     {% include '_partials/post.html.twig' with { 'content': content, 'full': true } %}
+    {% if content.frontMatterHas('user') %}
+    <div class="mx-auto text-center mb-10">
+        <a class="px-6 text-2xl text-white py-4 my-6 bg-gradient-to-r from-purple-900 to-pink-600 rounded-md shadow-lg" href="https://github.com/sponsors/{{ content.frontMatterGet('user') }}">
+        Sponsor @{{ content.frontMatterGet('user') }} on GitHub
+        </a>
+    </div>
+    {% endif %}
 </div>
 <div>
     {% include '_partials/sidebar.html.twig' %}

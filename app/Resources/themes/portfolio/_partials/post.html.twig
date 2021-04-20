@@ -1,7 +1,7 @@
 <div class="text-center">
     {% if content.frontMatterHas('cover_image') %}
         <a href="{{ site_root() }}{{ content.getLink() }}" title="Visit this user's profile: {{ content.frontMatterGet('title') }}">
-            <img class="mx-auto rounded-full max-w-7xl" src="{{ content.frontMatterGet('cover_image')|raw }}" alt="cover image">
+            <img class="mx-auto rounded-full md:max-w-5xl lg:max-w-7xl" src="{{ content.frontMatterGet('cover_image')|raw }}" alt="cover image">
         </a>
     {% endif %}
 
