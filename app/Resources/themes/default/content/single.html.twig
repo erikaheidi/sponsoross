@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block featured_content %}
+
+{% endblock %}
+
+{% block content %}
+    {% include '_partials/post.html.twig' with { 'content': content, 'full': true } %}
+{% endblock%}
+
