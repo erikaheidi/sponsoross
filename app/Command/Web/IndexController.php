@@ -6,6 +6,7 @@ use Librarian\Provider\TwigServiceProvider;
 use Librarian\WebController;
 use Librarian\Response;
 use Librarian\Provider\ContentServiceProvider;
+use Minicli\Minicache\FileCache;
 
 class IndexController extends WebController
 {
@@ -26,7 +27,7 @@ class IndexController extends WebController
 
         /** @var ContentServiceProvider $content_provider */
         $content_provider = $this->getApp()->content;
-        $content_list = $content_provider->fetchAll($start, $this->getApp()->config->posts_per_page);
+        $content_list = $content_provider->fetchFrom('profile', $start, $limit, false, 'desc');
 
         $output = $twig->render('content/listing.html.twig', [
             'content_list'  => $content_list,
