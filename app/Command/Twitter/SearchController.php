@@ -55,22 +55,7 @@ class SearchController extends CommandController
 
                         $this->getPrinter()->success("Found profile: $user");
 
-                        if ($github->isSponsorable($user)) {
-                            $this->getPrinter()->success("User $user is sponsorable! yay!", 1);
-
-                            $profile_path = $data_path . '/' . $user . '.md';
-                            //checks if user already exists, in this case skips
-                            if (is_file($profile_path)) {
-                                $this->getPrinter()->info("User is already in the list, skipping...");
-                                continue;
-                            }
-
-                            //make new request to obtain user info
-                            $user_info = $github->getUserInfo($user);
-                            $content = new Content($this->buildUserPage($user_info));
-                            $content->save($profile_path);
-                            $this->getPrinter()->info("Saved user info.");
-                        }
+                        $this->getApp()->runCommand(['librarian', 'import', 'github', $user]);
                     }
                 }
             }
@@ -78,33 +63,5 @@ class SearchController extends CommandController
 
         $this->getPrinter()->success('Finished.');
         return 0;
-    }
-
-    public function buildUserPage(array $user_data)
-    {
-        $tags = [];
-        $projects = [];
-
-        //generate tags for this user's top repo languages
-        foreach ($user_data['topRepositories']['nodes'] as $repository) {
-            $projects[] = $repository;
-            if (isset($repository['primaryLanguage']) && isset($repository['primaryLanguage']['name'])) {
-                $tags[] = $repository['primaryLanguage']['name'];
-            }
-        }
-
-        //front matter
-        $content = "---\n";
-        $content .= "title: " . $user_data['name'] . "\n";
-        $content .= "description: " . $user_data['sponsorsListing']['shortDescription'] . "\n";
-        $content .= "published: true\n";
-        $content .= "user: " . $user_data['login'] . "\n";
-        $content .= "cover_image: " . $user_data['avatarUrl'] . "\n";
-        $content .= "tags: " . implode(', ', array_unique($tags)) . "\n";
-        $content .= "---\n\n";
-
-        $content .= $user_data['sponsorsListing']['fullDescription'];
-
-        return $content;
     }
 }
