@@ -3,18 +3,20 @@
 
 namespace App;
 
-
 use Minicli\Curly\Client;
 
 class GithubClient
 {
-    protected $api_token;
+    protected string $api_token;
 
-    static $API_GRAPH = 'https://api.github.com/graphql';
+    public Client $client;
+
+    static string $API_GRAPH = 'https://api.github.com/graphql';
 
     public function __construct($api_token)
     {
         $this->api_token = $api_token;
+        $this->client = new Client();
     }
 
     public function getUserInfo($username)
@@ -66,8 +68,8 @@ query {
 }', $username);
 
         $response = $this->githubQuery($query);
+        //var_dump($response);
         if ($response['code'] === 200) {
-            //var_dump($response);
             $result = json_decode($response['body'], 1);
             return $result['data']['user']['hasSponsorsListing'];
         }
@@ -82,8 +84,8 @@ query {
             "Content-Type: application/json",
             "Authorization: bearer $this->api_token"
         ];
-        $client = new Client();
 
-        return $client->post(self::$API_GRAPH, [ 'query' => $query, 'variables' => $params ], $headers);
+
+        return $this->client->post(self::$API_GRAPH, [ 'query' => $query, 'variables' => $params ], $headers);
     }
 }

@@ -59,6 +59,8 @@ Now you can go to your browser and access `localhost:8000` to view your local ve
 
 ### Importing a new profile
 
+To run the `import` command, you'll need to edit your `config.php` file to set up your `GITHUB_API_TOKEN`. You can generate this token at the [Developer Settings Page](https://github.com/settings/tokens). 
+
 To import a new GitHub profile, run:
 
 ```command

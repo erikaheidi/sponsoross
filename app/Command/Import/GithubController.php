@@ -4,6 +4,7 @@
 namespace App\Command\Import;
 
 use App\GithubClient;
+use App\Profile;
 use Librarian\Exception\ApiException;
 use Librarian\Provider\DevtoServiceProvider;
 use Minicli\Command\CommandController;
@@ -38,6 +39,8 @@ class GithubController extends CommandController
             $content = new Content($this->buildUserPage($user_info));
             $content->save($profile_path);
             $this->getPrinter()->info("Saved $user info.");
+        } else {
+            $this->getPrinter()->error("The user is not sponsorable or there was an error in the request.");
         }
 
         $this->getPrinter()->success("Import Finished.");
